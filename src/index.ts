@@ -6,6 +6,7 @@ import { ProfilesController } from './controllers/profiles.controller';
 import { UsersController } from './controllers/users.controller';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { validationMiddleware } from './middlewares/validation.middleware';
 
 createConnection()
   .then(async () => {
@@ -14,21 +15,26 @@ createConnection()
 
     // User use case
     const mockCreateUserDto: CreateUserDto = {
-      firstName: 'John',
-      lastName: 'Doe',
-      age: 20,
+      firstName: 'Kruzier',
+      lastName: 'Hast',
+      age: 28,
+      profile: {
+        gender: 'male',
+        photo: 'kruzier.jpg',
+      },
     };
-    const usersController = new UsersController(usersService);
-    const createdUser = await usersController.create(mockCreateUserDto);
-    console.log('createdUser: ', createdUser);
 
-    // Profile use case
-    const mockCreateProfileDto: CreateProfileDto = {
-      gender: 'male',
-      photo: 'hello.jpg',
-    };
-    const profilesController = new ProfilesController(profilesService);
-    const createdProfile = await profilesController.create(mockCreateProfileDto, createdUser);
-    console.log('createdProfile: ', createdProfile);
+    try {
+      await validationMiddleware(CreateUserDto, mockCreateUserDto);
+      const usersController = new UsersController(usersService, profilesService);
+      const createdUser = await usersController.create(mockCreateUserDto);
+      console.log('createdUser: ', createdUser);
+    } catch (error) {
+      const response = {
+        statusCode: error.status,
+        message: error.message.split(','),
+      };
+      console.log(response);
+    }
   })
   .catch((error) => console.log('index error: ', error));
