@@ -1,13 +1,17 @@
 # TypeORM with TypeScript
+
 This repository is intended for playing around with TypeORM APIs in TypeScript and generated using TypeORM init command, but modified with a basic Backend layered architecture (Controller, Service, Entity).
 
 ## Pre-requisites
+
 - Ensure that you've setup a local database (e.g. `mysql`, `postgres`, etc.) before running this project.
 
 ## Steps to run this project:
+
 1. Clone this repository.
 2. Run `npm i` command.
 3. Setup database settings inside `ormconfig.json` file. An example would be:
+
 ```json
 {
   "type": "mysql",
@@ -28,5 +32,12 @@ This repository is intended for playing around with TypeORM APIs in TypeScript a
   }
 }
 ```
+
 4. Create a database locally within your machine depending on your `ormconfig.json`. For example, with the above example, the db would be `mysql` with the database of `db_name`.
 5. Run `npm start` command.
+
+## References
+
+This repo is inspired by the following references:
+
+- [Express with TypeScript Tutorial by mwanago](https://github.com/mwanago/express-typescript) - learn more from [wanago.io](https://wanago.io/)
