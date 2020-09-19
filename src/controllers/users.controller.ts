@@ -1,6 +1,9 @@
 import { User } from '../entity/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UsersService } from '../services/users.service';
+
+import { Profile } from '../entity/profile.entity';
+import { CreateProfileDto } from '../dto/create-profile.dto';
 import { ProfilesService } from '../services/profiles.service';
 
 export class UsersController {
@@ -15,5 +18,12 @@ export class UsersController {
     }
 
     return createdUser;
+  }
+
+  async createProfile(createProfileDto: CreateProfileDto, userId: number): Promise<Profile> {
+    const foundUser = await this.usersService.findOne(userId);
+    const createdProfile = await this.profilesService.create(createProfileDto, foundUser);
+
+    return createdProfile;
   }
 }

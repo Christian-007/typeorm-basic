@@ -13,6 +13,11 @@ export class ProfilesService {
     profile.photo = createProfileDto.photo;
     profile.user = selectedUser;
 
+    const hasProfile = !!selectedUser.profile;
+    if (hasProfile) {
+      profile.id = selectedUser.profile.id;
+    }
+
     try {
       const createdProfile = await this.profilesRepository.save(profile);
       return createdProfile;
