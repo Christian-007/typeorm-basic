@@ -1,10 +1,12 @@
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { Gender } from '../enums/gender.enum';
 
 export class CreateProfileDto {
+  @IsOptional()
   @IsEnum(Gender)
-  gender: string;
+  gender?: string;
 
+  @IsOptional()
   @IsString()
-  photo: string;
+  photo?: string;
 }
